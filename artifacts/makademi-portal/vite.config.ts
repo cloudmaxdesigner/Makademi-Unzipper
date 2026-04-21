@@ -1,5 +1,4 @@
 import { defineConfig, type Plugin } from "vite";
-import react from "@vitejs/plugin-react";
 import fs from "fs";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
@@ -184,9 +183,12 @@ function makademiStaticPlugin(): Plugin {
 
 export default defineConfig({
   base: basePath,
+  esbuild: {
+    jsx: "automatic",
+    jsxImportSource: "react",
+  },
   plugins: [
     makademiStaticPlugin(),
-    react(),
     runtimeErrorOverlay(),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
