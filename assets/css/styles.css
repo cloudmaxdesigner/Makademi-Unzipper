@@ -251,7 +251,7 @@ input,textarea,select{font-family:inherit}
 @media(min-width:640px){.hero-buttons{flex-direction:row}}
 .hero-image{display:none;position:relative;width:100%;min-height:90vh}
 @media(min-width:1024px){.hero-image{display:block;width:45%}}
-.hero-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-image img,.hero-image video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 .hero-image .gradient-left{position:absolute;inset:0;background:linear-gradient(to right,var(--navy),transparent)}
 .hero-image .gradient-bottom{position:absolute;left:0;right:0;bottom:0;height:8rem;background:linear-gradient(to bottom,transparent,var(--navy-dark))}
 
