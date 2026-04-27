@@ -399,10 +399,10 @@ input,textarea,select{font-family:inherit}
 .logo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
 @media(min-width:768px){.logo-grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:1024px){.logo-grid{grid-template-columns:repeat(4,1fr)}}
-.logo-card{border-radius:var(--radius);border:1px solid var(--slate-200);box-shadow:0 1px 3px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;min-height:7rem;padding:1.5rem;background:var(--white);transition:box-shadow 0.2s}
+.logo-card{border-radius:var(--radius);border:1px solid var(--slate-200);box-shadow:0 1px 3px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;padding:0.5rem;background:var(--white);transition:box-shadow 0.2s;overflow:hidden}
 .logo-card:hover{box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)}
 .logo-card.dark-bg{background:var(--navy)}
-.logo-card img{max-height:4rem;max-width:100%;object-fit:contain}
+.logo-card img{width:100%;height:100%;object-fit:contain}
 .logo-card .fallback{font-size:0.875rem;font-weight:700;text-align:center}
 .logo-card.dark-bg .fallback{color:var(--white)}
 
