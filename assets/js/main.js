@@ -110,6 +110,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Pre-select category from ?category=<slug> query param (used by homepage tiles + footer links)
+  if (catBtns.length) {
+    var qs = new URLSearchParams(window.location.search);
+    var slug = qs.get('category');
+    if (slug) {
+      var match = null;
+      catBtns.forEach(function (b) {
+        if (b.dataset.slug === slug) match = b;
+      });
+      if (match) {
+        catBtns.forEach(function (b) { b.classList.remove('active'); });
+        match.classList.add('active');
+        filterCourses();
+        var sidebar = document.querySelector('.courses-sidebar');
+        if (sidebar && sidebar.scrollIntoView) {
+          setTimeout(function () { sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+        }
+      }
+    }
+  }
+
   var contactForm = document.getElementById('contact-form');
   var formPanel = document.getElementById('form-panel');
   var successPanel = document.getElementById('success-panel');
