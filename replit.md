@@ -83,3 +83,17 @@ End-user follows `ADMIN_SETUP.md` (in the zip): upload zip → create MySQL DB i
 ### Rebuilding the zip
 
 `python3 /tmp/build_zip.py` (script kept under `/tmp`, not committed) walks `makademi-website/` and excludes: `db/makademi.sqlite`, `includes/config.php`, `admin/.installed`, `data/extracted.json`. The destructive zip-modify tooling (`adm-zip`) was removed earlier — Python's stdlib `zipfile` is the canonical builder now.
+
+### Hostinger Git deploy (two-branch setup)
+
+For users who prefer `git pull` over zip upload, the live site is served from a generated `hostinger-deploy` branch on `origin` whose **root** contains only the contents of `makademi-website/` (no `package.json`, no `artifacts/`, no `pnpm-workspace.yaml`). Hostinger's Git integration is pointed at that branch and pulls it directly into `public_html/`.
+
+Re-syncing after a code change to `makademi-website/`:
+
+```bash
+./scripts/sync-hostinger-deploy.sh
+```
+
+The script runs `git subtree split --prefix=makademi-website -b hostinger-deploy` and pushes with `--force-with-lease`. It refuses to run with uncommitted changes inside `makademi-website/`. End-user instructions are in `HOSTINGER_GIT.md` at the repo root. The zip-upload path (`makademi-website.zip` + File Manager) remains supported as a fallback.
+
+> **First push gotcha**: the main agent's git wrapper blocks `git subtree split` and `git push`. The first execution of the sync script needs to be run from a developer's local clone (or by reassigning a Hostinger-deploy task to a Replit task agent in an isolated environment). Subsequent runs are no different.
