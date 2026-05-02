@@ -40,6 +40,10 @@ EXCLUDE=(
   "db/makademi.sqlite-journal"
   "data/extracted.json"
 )
+# Note: of the above, only includes/config.php is currently tracked on
+# main; the others are gitignored and so wouldn't appear in a subtree
+# split anyway. They're listed defensively in case anyone ever
+# accidentally `git add`s one of them.
 
 cd "$(git rev-parse --show-toplevel)"
 

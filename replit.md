@@ -100,12 +100,14 @@ The script runs three steps: (1) `git subtree split --prefix=makademi-website -b
 
 > **First push gotcha**: the main agent's git wrapper blocks `git subtree split` and `git push`. The first execution of the sync script needs to be run from a developer's local clone (or by reassigning a Hostinger-deploy task to a Replit task agent in an isolated environment). Subsequent runs are no different.
 
-Verification of the deploy branch contents (without actually pushing) — useful in CI or after editing the EXCLUDE list:
+Verification of the deploy branch contents (without actually pushing) — useful in CI or after editing the EXCLUDE list. This uses `git ls-tree` (not the working tree) so it accurately reflects what `git subtree split` would produce, since untracked files are never published:
 
 ```bash
-SIM=$(mktemp -d) && cp -r makademi-website/. "$SIM/" \
-  && rm -f "$SIM"/{includes/config.php,admin/.installed,db/makademi.sqlite,db/makademi.sqlite-journal,data/extracted.json} \
-  && (cd "$SIM" && ls -A | sort) && rm -rf "$SIM"
+SUBTREE=$(git ls-tree HEAD makademi-website | awk '{print $3}')
+echo "--- top-level of deploy branch ---"
+git ls-tree --name-only "$SUBTREE" | sort
+echo "--- includes/ (config.php must be removed by the script before push) ---"
+git ls-tree --name-only "$SUBTREE" includes/ | sort
 ```
 
-When run today, the result is exactly: `404.html about.html admin ADMIN_SETUP.md apple-touch-icon.png assets config.example.php CONTACT_FORM_SETUP.md contact.html courses courses.php data db favicon-16.png favicon-32.png favicon.ico gallery.php includes index.html README.txt`. Note the absence of `package.json`, `artifacts/`, `pnpm-workspace.yaml`, `replit.md`, `scripts/`, `.local/`.
+When run today against `main`, the **top level** of the deploy branch is exactly: `404.html about.html admin ADMIN_SETUP.md apple-touch-icon.png assets config.example.php CONTACT_FORM_SETUP.md contact.html courses courses.php db favicon-16.png favicon-32.png favicon.ico gallery.php includes index.html README.txt` (19 entries). Note: `package.json`, `artifacts/`, `pnpm-workspace.yaml`, `replit.md`, `scripts/`, and `.local/` are absent (different folder), and `data/` is absent (its only file `extracted.json` is gitignored, so the directory has no tracked content and never appears on the deploy branch). Inside `includes/`, the tracked files include `config.php` — the sync script's scrub step removes it before push, so the published deploy branch's `includes/` contains only `auth.php csrf.php db.php helpers.php partials/`.
