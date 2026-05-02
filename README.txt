@@ -17,7 +17,10 @@ HOSTING ON HOSTINGER (FILE MANAGER)
    - about.html
    - contact.html
    - 404.html
-   - favicon.svg
+   - favicon.ico
+   - favicon-16.png
+   - favicon-32.png
+   - apple-touch-icon.png
    - assets/ (entire folder)
    - courses/ (entire folder)
 
@@ -36,7 +39,10 @@ makademi-website/
   about.html              About, clients, partners, accreditations
   contact.html            Contact form + info
   404.html                Custom 404 page
-  favicon.svg             Browser tab icon
+  favicon.ico             Browser tab icon (multi-res 16/32/48)
+  favicon-16.png          Browser tab icon (16x16, modern browsers)
+  favicon-32.png          Browser tab icon (32x32, modern browsers)
+  apple-touch-icon.png    iOS home-screen icon (180x180)
   assets/
     css/styles.css         All styles (navy #00234B + gold #D4AF37 palette)
     js/main.js             Mobile nav, accordion, search/filter, counters
