@@ -1,0 +1,114 @@
+/* Makademi admin styles — layered on top of styles.css */
+:root {
+  --admin-bg: #f5f7fb;
+  --admin-card: #ffffff;
+  --admin-border: #e3e7ee;
+  --admin-text: #1a2b4a;
+  --admin-muted: #5f6b85;
+  --admin-danger: #b91c1c;
+  --admin-success: #15803d;
+  --admin-gold: #c9a14a;
+  --admin-navy: #1a2b4a;
+}
+
+body.admin {
+  background: var(--admin-bg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--admin-text);
+  margin: 0;
+}
+
+.admin-shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+.admin-topbar {
+  background: var(--admin-navy);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.admin-topbar a { color: #fff; text-decoration: none; }
+.admin-topbar .brand { font-weight: 700; letter-spacing: 0.5px; }
+.admin-topbar .brand small { color: var(--admin-gold); font-weight: 500; margin-left: 0.5rem; }
+.admin-topbar nav { display: flex; gap: 1.25rem; }
+.admin-topbar nav a { padding: 0.25rem 0.5rem; border-radius: 4px; opacity: 0.85; }
+.admin-topbar nav a.active, .admin-topbar nav a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+.admin-topbar .meta { display:flex; gap:1rem; align-items:center; font-size: 0.875rem; }
+.admin-topbar .logout-form { margin: 0; padding: 0; }
+.admin-topbar .link-button {
+  background: none; border: 0; color: #fff; padding: 0;
+  font: inherit; cursor: pointer; text-decoration: none; opacity: 0.9;
+}
+.admin-topbar .link-button:hover { opacity: 1; text-decoration: underline; }
+
+.admin-main { flex: 1; padding: 2rem; max-width: 1200px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+.admin-main h1 { font-size: 1.5rem; margin: 0 0 1rem; }
+.admin-main h2 { font-size: 1.125rem; margin: 1.5rem 0 0.75rem; }
+
+.admin-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+.admin-stat { background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 8px; padding: 1rem 1.25rem; }
+.admin-stat .num { font-size: 2rem; font-weight: 700; color: var(--admin-navy); }
+.admin-stat .label { color: var(--admin-muted); font-size: 0.875rem; }
+
+.admin-form { display: grid; gap: 0.75rem; max-width: 640px; }
+.admin-form label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem; }
+.admin-form input[type=text], .admin-form input[type=email], .admin-form input[type=password],
+.admin-form input[type=url], .admin-form input[type=number], .admin-form select, .admin-form textarea {
+  width: 100%; padding: 0.55rem 0.75rem;
+  border: 1px solid var(--admin-border); border-radius: 6px;
+  font-size: 0.9375rem; background: #fff; box-sizing: border-box;
+  font-family: inherit;
+}
+.admin-form textarea { min-height: 90px; resize: vertical; }
+.admin-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.admin-form .check { display: flex; align-items: center; gap: 0.5rem; }
+.admin-form .actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+
+.btn-admin { padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid transparent; font-size: 0.9375rem; cursor: pointer; text-decoration: none; display: inline-block; font-family: inherit; }
+.btn-admin.primary { background: var(--admin-navy); color: #fff; }
+.btn-admin.primary:hover { background: #0f1f3d; }
+.btn-admin.gold { background: var(--admin-gold); color: #1a1100; font-weight: 600; }
+.btn-admin.outline { background: #fff; border-color: var(--admin-border); color: var(--admin-text); }
+.btn-admin.danger { background: var(--admin-danger); color: #fff; }
+.btn-admin.small { padding: 0.3rem 0.65rem; font-size: 0.8125rem; }
+
+.admin-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.admin-table th, .admin-table td { text-align: left; padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--admin-border); vertical-align: top; }
+.admin-table th { background: #fafbfd; font-weight: 600; color: var(--admin-muted); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.admin-table tr:hover td { background: #fafcff; }
+.admin-table .col-actions { white-space: nowrap; text-align: right; }
+.admin-table .col-actions form { display: inline; }
+.admin-table .pill { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 999px; font-size: 0.75rem; background: #eef2f9; color: var(--admin-muted); }
+.admin-table .pill.on { background: #dcfce7; color: #15803d; }
+.admin-table .pill.off { background: #fee2e2; color: #991b1b; }
+
+.admin-flash { padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.9375rem; }
+.admin-flash.success { background: #dcfce7; color: #14532d; border: 1px solid #bbf7d0; }
+.admin-flash.error   { background: #fee2e2; color: #7f1d1d; border: 1px solid #fecaca; }
+.admin-flash.info    { background: #dbeafe; color: #1e3a8a; border: 1px solid #bfdbfe; }
+
+.admin-toolbar { display: flex; gap: 0.75rem; align-items: end; flex-wrap: wrap; margin-bottom: 1rem; }
+.admin-toolbar .grow { flex: 1; min-width: 200px; }
+
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; }
+.gallery-thumb { background: #fff; border: 1px solid var(--admin-border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+.gallery-thumb img { width: 100%; height: 140px; object-fit: cover; display: block; }
+.gallery-thumb .meta { padding: 0.5rem 0.65rem; font-size: 0.8125rem; color: var(--admin-muted); }
+.gallery-thumb .meta .cap { color: var(--admin-text); margin-bottom: 0.25rem; }
+.gallery-thumb .meta form { margin-top: 0.5rem; }
+
+.login-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--admin-bg); padding: 1rem; }
+.login-card { background: #fff; padding: 2rem; border-radius: 10px; border: 1px solid var(--admin-border); width: 100%; max-width: 360px; box-shadow: 0 6px 24px rgba(0,0,0,0.05); }
+.login-card h1 { margin: 0 0 0.25rem; font-size: 1.25rem; }
+.login-card p.sub { color: var(--admin-muted); font-size: 0.875rem; margin: 0 0 1.5rem; }

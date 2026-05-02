@@ -26,20 +26,60 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
 
-## Static Deliverable: Makademi Training Hub
+## Deliverable: Makademi Training Hub (PHP + MySQL on Hostinger)
 
-A plain HTML/CSS/JS static website rebuild of the React Makademi Training Hub portal.
+A PHP-rendered website for Makademi Training & Consultancy. The site lives in `makademi-website/` and ships as `makademi-website.zip` (~31 MB) for upload to Hostinger Business plan.
 
-- **Directory**: `makademi-website/`
-- **Downloadable**: `makademi-website.zip` (4.8 MB)
-- **Pages**: 7 HTML files (index, courses, about, contact, 404, and 2 course detail pages)
-- **Courses**: 101 programs with client-side search and category filtering
-- **Design**: Navy (#00234B) + Gold (#D4AF37) palette, Inter + DM Sans typography
-- **No build step**: Upload directly to Hostinger File Manager
-- **Contact form**: FormSubmit.co integration (see README.txt for alternatives)
+### Architecture
+
+- **Public pages**: `index.html`, `about.html`, `contact.html`, `404.html`, two `courses/*.html` detail pages — plain HTML.
+- **DB-driven pages**: `courses.php` (101 programs catalog with search/filter) and `gallery.php` (categorised photo grid with lightbox) read from the database.
+- **Admin portal** (`admin/`): password-protected CRUD for programs and gallery photos. The user can add/remove courses and upload images without ever editing code.
+- **Database**: MySQL (production on Hostinger); SQLite (local Replit dev). One PDO codepath, two DSNs.
+- **Design system unchanged**: Navy (#00234B) + Gold (#D4AF37), Inter + DM Sans.
+
+### Layout
+
+```
+makademi-website/
+  index.html  about.html  contact.html  404.html  config.example.php
+  courses.php  gallery.php
+  admin/
+    setup-account.php  login.php  logout.php  index.php
+    programs.php  gallery.php  _header.php  _footer.php
+  includes/
+    config.php (gitignored, dev = SQLite; on Hostinger user creates from config.example.php)
+    db.php  auth.php  csrf.php  helpers.php
+    partials/{header,footer,lightbox}.php
+  db/
+    setup.sql           (MySQL schema + 101 programs + 6 gallery photos seed)
+    setup.sqlite.sql    (mirror for local dev)
+    makademi.sqlite     (gitignored, local only)
+  assets/css/styles.css + admin.css ; assets/js/main.js
+  assets/images/gallery/   (auto-populated by admin uploads)
+  ADMIN_SETUP.md  README.txt  CONTACT_FORM_SETUP.md
+scripts/extract-makademi-content.mjs  (one-shot: parses old courses.html + gallery.html → seed SQL)
+```
+
+### Security model
+
+- Single admin user (bcrypt). Per-session brute-force throttle (5 fails → 60s lock).
+- All POST routes CSRF-checked; logout is POST-only.
+- Bootstrap-takeover protection: `/admin/setup-account.php` requires the operator to paste the `app_secret` from `includes/config.php` and refuses to run while `app_secret` is the placeholder. Triple lock: marker file + DB row count + secret check.
+- Setup race: SQLite `BEGIN IMMEDIATE` / MySQL transaction wrap COUNT+INSERT atomically.
+- Login `next=` param is allowlisted to known admin pages (no open-redirect).
+- File uploads validate MIME via `finfo` (`jpg/png/webp/gif`), 10 MB cap, random-hex filename, basename-only unlink (no path traversal).
 
 ### Workspace Preview
 
-The static site is also served live in the workspace Preview pane via the `makademi-portal` artifact (`artifacts/makademi-portal/`), a Vite dev server with a custom middleware plugin that serves files from `makademi-website/` at the root path. Extensionless URLs like `/courses` resolve to `courses.html`, and unknown paths fall back to `404.html`. The `api-server` artifact still owns `/api`.
+Served via the `makademi-portal` artifact (`artifacts/makademi-portal/`) using PHP's built-in dev server: `php -S 0.0.0.0:22731 -t /home/runner/workspace/makademi-website`. The dev `includes/config.php` points at SQLite at `db/makademi.sqlite`, with a non-placeholder `app_secret` (`replit-local-dev-secret-d4e7c0a3-not-for-public-deploy`) so the local setup flow works end-to-end.
 
-The Preview pane also injects the [Agentation](https://www.npmjs.com/package/agentation) visual feedback toolbar into every served HTML response on the fly (via `src/agentation-init.tsx`). The on-disk files in `makademi-website/` are never modified, so the Hostinger zip stays clean. To use the toolbar to send annotations to a coding agent, the user must run the Agentation MCP server locally (`npx add-mcp` adds `agentation-mcp`).
+To exercise the admin locally: visit `/admin/setup-account.php`, paste the dev `app_secret` from `includes/config.php`, pick a username + password (≥12 chars), then sign in at `/admin/login.php`.
+
+### Hostinger deployment
+
+End-user follows `ADMIN_SETUP.md` (in the zip): upload zip → create MySQL DB in hPanel → copy `config.example.php` to `includes/config.php` and fill in DB creds + a strong `app_secret` → import `db/setup.sql` via phpMyAdmin → visit `/admin/setup-account.php` once with the secret → log in.
+
+### Rebuilding the zip
+
+`python3 /tmp/build_zip.py` (script kept under `/tmp`, not committed) walks `makademi-website/` and excludes: `db/makademi.sqlite`, `includes/config.php`, `admin/.installed`, `data/extracted.json`. The destructive zip-modify tooling (`adm-zip`) was removed earlier — Python's stdlib `zipfile` is the canonical builder now.

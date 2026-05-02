@@ -1,9 +1,23 @@
-<!DOCTYPE html>
+<?php
+/**
+ * Site header partial.
+ *
+ * Variables expected (set before include):
+ *   $page_title       — string  e.g. 'Training Programs - Global Makademi'
+ *   $page_description — string  meta description
+ *   $active_nav       — string  one of: home|about|programs|gallery|contact (optional)
+ */
+$active_nav = $active_nav ?? '';
+function _nav_cls(string $key, string $active): string {
+    return 'nav-link' . ($key === $active ? ' active' : '');
+}
+?><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found - Global Makademi</title>
+  <title><?= e($page_title ?? 'Global Makademi') ?></title>
+  <meta name="description" content="<?= e($page_description ?? '') ?>">
   <link rel="icon" href="favicon.ico" sizes="48x48">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="favicon-16.png" type="image/png" sizes="16x16">
@@ -25,10 +39,11 @@
         </a>
         <nav class="desktop-nav">
           <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="about.html" class="nav-link">About</a>
-            <a href="courses.php" class="nav-link">Programs</a>
-            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="index.html" class="<?= _nav_cls('home', $active_nav) ?>">Home</a>
+            <a href="about.html" class="<?= _nav_cls('about', $active_nav) ?>">About</a>
+            <a href="courses.php" class="<?= _nav_cls('programs', $active_nav) ?>">Programs</a>
+            <a href="gallery.php" class="<?= _nav_cls('gallery', $active_nav) ?>">Gallery</a>
+            <a href="contact.html" class="<?= _nav_cls('contact', $active_nav) ?>">Contact</a>
           </div>
           <a href="contact.html" class="btn btn-gold">Inquire Now</a>
         </nav>
@@ -39,33 +54,13 @@
       </div>
     </div>
     <div class="mobile-nav" id="mobile-nav">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="courses.php" class="nav-link">Programs</a>
-      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="index.html" class="<?= _nav_cls('home', $active_nav) ?>">Home</a>
+      <a href="about.html" class="<?= _nav_cls('about', $active_nav) ?>">About</a>
+      <a href="courses.php" class="<?= _nav_cls('programs', $active_nav) ?>">Programs</a>
+      <a href="gallery.php" class="<?= _nav_cls('gallery', $active_nav) ?>">Gallery</a>
+      <a href="contact.html" class="<?= _nav_cls('contact', $active_nav) ?>">Contact</a>
       <div class="mobile-cta">
         <a href="contact.html" class="btn btn-gold btn-full" style="font-size:1.125rem;height:3rem">Inquire Now</a>
       </div>
     </div>
   </header>
-
-  <main style="padding-top:5rem">
-    <div class="not-found">
-      <div class="inner">
-        <div class="icon-box">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        </div>
-        <h1>404</h1>
-        <h2>Page Not Found</h2>
-        <p>The page you are looking for does not exist or may have moved. Please check the URL or return to our homepage.</p>
-        <div class="btn-row">
-          <a href="index.html" class="btn btn-navy"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.5rem"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to Home</a>
-          <a href="courses.php" class="btn btn-outline-navy">Explore Programs</a>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <script src="assets/js/main.js"></script>
-</body>
-</html>
