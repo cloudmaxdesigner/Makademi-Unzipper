@@ -254,13 +254,13 @@ $canReorder = ($search === '' && $catSlug === '');
     <thead>
       <tr>
 <?php if ($canReorder): ?>
-        <th style="width:36px" aria-label="Drag to reorder"></th>
+        <th class="col-sm-hide" style="width:36px" aria-label="Drag to reorder"></th>
 <?php endif; ?>
-        <th style="width:60px">Sort</th>
+        <th class="col-sm-hide" style="width:60px">Sort</th>
         <th>Title</th>
-        <th>Category</th>
-        <th>Duration</th>
-        <th>Location</th>
+        <th class="col-sm-hide">Category</th>
+        <th class="col-sm-hide">Duration</th>
+        <th class="col-sm-hide">Location</th>
         <th>Status</th>
         <th class="col-actions">Actions</th>
       </tr>
@@ -271,16 +271,20 @@ $canReorder = ($search === '' && $catSlug === '');
 <?php else: foreach ($rows as $r): ?>
       <tr<?= $canReorder ? ' data-id="' . (int)$r['id'] . '"' : '' ?>>
 <?php if ($canReorder): ?>
-        <td class="col-handle"><span class="drag-handle" role="button" aria-label="Drag to reorder" title="Drag to reorder"><svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M9 5h2v2H9V5Zm4 0h2v2h-2V5ZM9 11h2v2H9v-2Zm4 0h2v2h-2v-2ZM9 17h2v2H9v-2Zm4 0h2v2h-2v-2Z"/></svg></span></td>
+        <td class="col-handle col-sm-hide"><span class="drag-handle" role="button" aria-label="Drag to reorder" title="Drag to reorder"><svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path fill="currentColor" d="M9 5h2v2H9V5Zm4 0h2v2h-2V5ZM9 11h2v2H9v-2Zm4 0h2v2h-2v-2ZM9 17h2v2H9v-2Zm4 0h2v2h-2v-2Z"/></svg></span></td>
 <?php endif; ?>
-        <td<?= $canReorder ? ' data-sort-label' : '' ?>><?= (int)$r['sort_order'] ?></td>
+        <td class="col-sm-hide"<?= $canReorder ? ' data-sort-label' : '' ?>><?= (int)$r['sort_order'] ?></td>
         <td>
           <strong><?= e($r['title']) ?></strong>
           <div style="color:var(--admin-muted);font-size:0.8125rem;margin-top:0.125rem"><?= e(mb_strimwidth($r['description'], 0, 110, '…')) ?></div>
+          <div class="col-sm-only" style="display:none;margin-top:0.25rem;font-size:0.75rem;color:var(--admin-subtle)">
+            <span class="pill" style="font-size:0.65rem"><?= e($r['category_name']) ?></span>
+            <?php if ($r['duration']): ?><span style="margin-left:0.35rem"><?= e($r['duration']) ?></span><?php endif; ?>
+          </div>
         </td>
-        <td><span class="pill"><?= e($r['category_name']) ?></span></td>
-        <td><?= e($r['duration']) ?></td>
-        <td><?= e($r['location']) ?></td>
+        <td class="col-sm-hide"><span class="pill"><?= e($r['category_name']) ?></span></td>
+        <td class="col-sm-hide"><?= e($r['duration']) ?></td>
+        <td class="col-sm-hide"><?= e($r['location']) ?></td>
         <td>
 <?php if ((int)$r['is_published'] === 1): ?>
           <span class="pill on">Published</span>

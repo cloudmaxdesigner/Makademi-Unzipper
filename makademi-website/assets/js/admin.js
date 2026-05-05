@@ -146,8 +146,32 @@
     container.addEventListener('pointerdown', onPointerDown);
   }
 
+  function initMobileNav() {
+    var sidebar = document.querySelector('.admin-sidebar');
+    if (!sidebar) return;
+    sidebar.addEventListener('click', function (e) {
+      var link = e.target.closest('.nav-link, .ghost-link');
+      if (link && window.innerWidth <= 900) {
+        document.body.classList.remove('nav-open');
+      }
+    });
+  }
+
+  function initColSmOnly() {
+    var mq = window.matchMedia('(max-width: 640px)');
+    function toggle(m) {
+      document.querySelectorAll('.col-sm-only').forEach(function (el) {
+        el.style.display = m.matches ? 'block' : 'none';
+      });
+    }
+    toggle(mq);
+    mq.addEventListener('change', toggle);
+  }
+
   function init() {
     document.querySelectorAll('[data-reorder]').forEach(initReorder);
+    initMobileNav();
+    initColSmOnly();
   }
 
   if (document.readyState === 'loading') {
