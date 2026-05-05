@@ -61,7 +61,7 @@ include __DIR__ . '/includes/partials/header.php';
       <div class="container inner">
         <h2>Want to see one of our programs in person?</h2>
         <p>We host on-site visits and tailor corporate programs at facilities across Türkiye, Libya, and the wider region.</p>
-        <a href="contact.html" class="btn btn-gold btn-lg">Get in Touch</a>
+        <a href="contact" class="btn btn-gold btn-lg">Get in Touch</a>
       </div>
     </section>
 

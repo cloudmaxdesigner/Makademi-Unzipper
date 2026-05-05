@@ -42,7 +42,7 @@ function require_admin(): array
     $admin = current_admin();
     if (!$admin) {
         $next = $_SERVER['REQUEST_URI'] ?? '';
-        header('Location: login.php?next=' . urlencode($next));
+        header('Location: login?next=' . urlencode($next));
         exit;
     }
     return $admin;

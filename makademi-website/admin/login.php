@@ -8,22 +8,26 @@ require_once __DIR__ . '/../includes/helpers.php';
 
 start_admin_session();
 if (current_admin()) {
-    redirect('index.php');
+    redirect('index');
 }
 
 $err = null;
 // Strict allowlist: ignore anything in `next` that isn't one of the
 // known admin pages. Defends against open-redirect (`//evil.com`,
 // `\\evil.com`, `javascript:`, scheme-relative URLs, etc.).
-$NEXT_ALLOWED = ['index.php', 'programs.php', 'gallery.php'];
-$next = 'index.php';
+// We accept both clean (`programs`) and legacy (`programs.php`) basenames
+// since older bookmarks/links may still pass `.php`; both resolve to the
+// same admin page after Apache's rewrite.
+$NEXT_ALLOWED = ['index', 'programs', 'gallery', 'index.php', 'programs.php', 'gallery.php'];
+$next = 'index';
 $nextRaw = $_GET['next'] ?? '';
 if (is_string($nextRaw) && $nextRaw !== '') {
     $path = parse_url($nextRaw, PHP_URL_PATH);
     if (is_string($path)) {
         $base = basename($path);
         if (in_array($base, $NEXT_ALLOWED, true)) {
-            $next = $base;
+            // Normalize legacy `.php` form to the clean URL.
+            $next = preg_replace('/\.php$/', '', $base);
         }
     }
 }

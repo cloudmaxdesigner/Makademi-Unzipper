@@ -18,9 +18,9 @@ function _adm_nav(string $key, string $a): string { return $key === $a ? 'is-act
 $me = current_admin();
 
 $nav_items = [
-    ['key' => 'dashboard', 'href' => 'index.php',    'label' => 'Dashboard', 'icon' => 'M3 12h6V3H3v9Zm0 9h6v-7H3v7Zm8 0h10v-9H11v9Zm0-18v7h10V3H11Z'],
-    ['key' => 'programs',  'href' => 'programs.php', 'label' => 'Programs',  'icon' => 'M4 4h16v4H4V4Zm0 6h16v4H4v-4Zm0 6h16v4H4v-4Z'],
-    ['key' => 'gallery',   'href' => 'gallery.php',  'label' => 'Gallery',   'icon' => 'M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Zm2 12 4-5 3 4 2-2 3 4H6Zm9-8a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z'],
+    ['key' => 'dashboard', 'href' => 'index',    'label' => 'Dashboard', 'icon' => 'M3 12h6V3H3v9Zm0 9h6v-7H3v7Zm8 0h10v-9H11v9Zm0-18v7h10V3H11Z'],
+    ['key' => 'programs',  'href' => 'programs', 'label' => 'Programs',  'icon' => 'M4 4h16v4H4V4Zm0 6h16v4H4v-4Zm0 6h16v4H4v-4Z'],
+    ['key' => 'gallery',   'href' => 'gallery',  'label' => 'Gallery',   'icon' => 'M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Zm2 12 4-5 3 4 2-2 3 4H6Zm9-8a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z'],
 ];
 ?><!DOCTYPE html>
 <html lang="en">
@@ -34,7 +34,7 @@ $nav_items = [
 <body class="admin">
   <div class="admin-shell">
     <aside class="admin-sidebar" aria-label="Primary navigation">
-      <a href="index.php" class="brand">
+      <a href="index" class="brand">
         <span class="brand-mark" aria-hidden="true">M</span>
         <span class="brand-text">
           <strong>Makademi</strong>
@@ -50,7 +50,7 @@ $nav_items = [
 <?php endforeach; ?>
       </nav>
       <div class="sidebar-foot">
-        <a href="../index.html" target="_blank" rel="noopener" class="ghost-link">
+        <a href="../" target="_blank" rel="noopener" class="ghost-link">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.4L10.7 14.7l-1.4-1.4L17.6 5H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z"/></svg>
           View public site
         </a>
@@ -66,7 +66,7 @@ $nav_items = [
         <div class="topbar-meta">
 <?php if ($me): ?>
           <span class="who">Signed in as <strong><?= e($me['username']) ?></strong></span>
-          <form method="post" action="logout.php" class="logout-form">
+          <form method="post" action="logout" class="logout-form">
             <?= csrf_field() ?>
             <button type="submit" class="btn-admin ghost small">Sign out</button>
           </form>

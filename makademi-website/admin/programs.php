@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($errs) {
             flash_set('error', implode(' ', $errs));
-            redirect('programs.php?action=' . ($id ? 'edit&id=' . $id : 'new'));
+            redirect('programs?action=' . ($id ? 'edit&id=' . $id : 'new'));
         }
 
         if ($id > 0) {
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $i->execute([$title, $description, $catId, $duration, $location, $detailUrl, $sortOrder, $published]);
             flash_set('success', 'Program created.');
         }
-        redirect('programs.php');
+        redirect('programs');
     }
 
     if ($do === 'reorder') {
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
                 flash_set('error', 'Could not save the new order.');
-                redirect('programs.php');
+                redirect('programs');
             }
         }
         if ($wantsJson) {
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
         flash_set('success', 'Order updated.');
-        redirect('programs.php');
+        redirect('programs');
     }
 
     if ($do === 'delete') {
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdo->prepare('DELETE FROM programs WHERE id = ?')->execute([$id]);
             flash_set('success', 'Program deleted.');
         }
-        redirect('programs.php');
+        redirect('programs');
     }
 }
 
@@ -128,7 +128,7 @@ $categories = categories_all();
 $editing = null;
 if ($action === 'edit') {
     $editing = load_program($pdo, (int)($_GET['id'] ?? 0));
-    if (!$editing) { flash_set('error', 'Program not found.'); redirect('programs.php'); }
+    if (!$editing) { flash_set('error', 'Program not found.'); redirect('programs'); }
 }
 
 // Safe to render now.
@@ -187,7 +187,7 @@ if ($action === 'new' || $action === 'edit') {
         </div>
         <div class="actions">
           <button type="submit" class="btn-admin primary"><?= $editing ? 'Save changes' : 'Create program' ?></button>
-          <a href="programs.php" class="btn-admin outline">Cancel</a>
+          <a href="programs" class="btn-admin outline">Cancel</a>
         </div>
       </form>
     </div>
@@ -236,10 +236,10 @@ $rows = $stmt->fetchAll();
   </div>
   <div>
     <button type="submit" class="btn-admin primary">Filter</button>
-    <a href="programs.php" class="btn-admin outline">Reset</a>
+    <a href="programs" class="btn-admin outline">Reset</a>
   </div>
   <div style="margin-left:auto">
-    <a href="programs.php?action=new" class="btn-admin gold">+ Add new program</a>
+    <a href="programs?action=new" class="btn-admin gold">+ Add new program</a>
   </div>
 </form>
 
@@ -247,7 +247,7 @@ $rows = $stmt->fetchAll();
 $canReorder = ($search === '' && $catSlug === '');
 ?>
 <?php if (!$canReorder && $rows): ?>
-<div class="admin-flash info" style="margin-bottom:0.75rem">Drag-to-reorder is disabled while a search or category filter is active. <a href="programs.php" style="color:inherit;text-decoration:underline">Clear the filter</a> to rearrange programs.</div>
+<div class="admin-flash info" style="margin-bottom:0.75rem">Drag-to-reorder is disabled while a search or category filter is active. <a href="programs" style="color:inherit;text-decoration:underline">Clear the filter</a> to rearrange programs.</div>
 <?php endif; ?>
 <div class="admin-card" style="padding:0;overflow:auto">
   <table class="admin-table">
@@ -265,7 +265,7 @@ $canReorder = ($search === '' && $catSlug === '');
         <th class="col-actions">Actions</th>
       </tr>
     </thead>
-    <tbody<?= $canReorder ? ' data-reorder data-reorder-url="programs.php" data-reorder-item="tr[data-id]"' : '' ?>>
+    <tbody<?= $canReorder ? ' data-reorder data-reorder-url="programs" data-reorder-item="tr[data-id]"' : '' ?>>
 <?php if (!$rows): ?>
       <tr><td colspan="<?= $canReorder ? 8 : 7 ?>" style="text-align:center;color:var(--admin-muted);padding:2rem">No programs match.</td></tr>
 <?php else: foreach ($rows as $r): ?>
@@ -289,7 +289,7 @@ $canReorder = ($search === '' && $catSlug === '');
 <?php endif; ?>
         </td>
         <td class="col-actions">
-          <a class="btn-admin small outline" href="programs.php?action=edit&id=<?= (int)$r['id'] ?>">Edit</a>
+          <a class="btn-admin small outline" href="programs?action=edit&id=<?= (int)$r['id'] ?>">Edit</a>
           <form method="post" onsubmit="return confirm('Delete this program? This cannot be undone.')" style="display:inline">
             <?= csrf_field() ?>
             <input type="hidden" name="do" value="delete">

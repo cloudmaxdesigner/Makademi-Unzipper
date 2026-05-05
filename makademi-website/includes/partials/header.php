@@ -30,7 +30,7 @@ function _nav_cls(string $key, string $active): string {
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
-        <a href="index.html" class="brand">
+        <a href="/" class="brand">
           <img src="assets/images/makademi-logo.jpeg" alt="Global Makademi Logo">
           <div class="brand-text">
             <span class="brand-name">GLOBAL MAKADEMI</span>
@@ -39,13 +39,13 @@ function _nav_cls(string $key, string $active): string {
         </a>
         <nav class="desktop-nav">
           <div class="nav-links">
-            <a href="index.html" class="<?= _nav_cls('home', $active_nav) ?>">Home</a>
-            <a href="about.html" class="<?= _nav_cls('about', $active_nav) ?>">About</a>
-            <a href="courses.php" class="<?= _nav_cls('programs', $active_nav) ?>">Programs</a>
-            <a href="gallery.php" class="<?= _nav_cls('gallery', $active_nav) ?>">Gallery</a>
-            <a href="contact.html" class="<?= _nav_cls('contact', $active_nav) ?>">Contact</a>
+            <a href="/" class="<?= _nav_cls('home', $active_nav) ?>">Home</a>
+            <a href="about" class="<?= _nav_cls('about', $active_nav) ?>">About</a>
+            <a href="courses" class="<?= _nav_cls('programs', $active_nav) ?>">Programs</a>
+            <a href="gallery" class="<?= _nav_cls('gallery', $active_nav) ?>">Gallery</a>
+            <a href="contact" class="<?= _nav_cls('contact', $active_nav) ?>">Contact</a>
           </div>
-          <a href="contact.html" class="btn btn-gold">Inquire Now</a>
+          <a href="contact" class="btn btn-gold">Inquire Now</a>
         </nav>
         <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
           <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
@@ -54,13 +54,13 @@ function _nav_cls(string $key, string $active): string {
       </div>
     </div>
     <div class="mobile-nav" id="mobile-nav">
-      <a href="index.html" class="<?= _nav_cls('home', $active_nav) ?>">Home</a>
-      <a href="about.html" class="<?= _nav_cls('about', $active_nav) ?>">About</a>
-      <a href="courses.php" class="<?= _nav_cls('programs', $active_nav) ?>">Programs</a>
-      <a href="gallery.php" class="<?= _nav_cls('gallery', $active_nav) ?>">Gallery</a>
-      <a href="contact.html" class="<?= _nav_cls('contact', $active_nav) ?>">Contact</a>
+      <a href="/" class="<?= _nav_cls('home', $active_nav) ?>">Home</a>
+      <a href="about" class="<?= _nav_cls('about', $active_nav) ?>">About</a>
+      <a href="courses" class="<?= _nav_cls('programs', $active_nav) ?>">Programs</a>
+      <a href="gallery" class="<?= _nav_cls('gallery', $active_nav) ?>">Gallery</a>
+      <a href="contact" class="<?= _nav_cls('contact', $active_nav) ?>">Contact</a>
       <div class="mobile-cta">
-        <a href="contact.html" class="btn btn-gold btn-full" style="font-size:1.125rem;height:3rem">Inquire Now</a>
+        <a href="contact" class="btn btn-gold btn-full" style="font-size:1.125rem;height:3rem">Inquire Now</a>
       </div>
     </div>
   </header>

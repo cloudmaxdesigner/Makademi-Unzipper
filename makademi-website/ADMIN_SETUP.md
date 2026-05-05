@@ -106,6 +106,31 @@ You only have to do this setup **once**. After that, day-to-day changes are made
 
 ---
 
+## A note on URLs (clean / extensionless)
+
+On Hostinger, the site uses **clean URLs** — visitors and admins see
+`/about`, `/courses`, `/admin/programs` instead of the older
+`/about.html`, `/courses.php`, `/admin/programs.php`. This is handled
+by the `.htaccess` file in `public_html/`, which:
+
+- 301-redirects every old `*.php` / `*.html` URL to its clean form
+  (preserving the query string), so existing search-engine links and
+  bookmarks keep working without breaking SEO.
+- Internally rewrites the clean URL back to the matching `.php` or
+  `.html` file on disk.
+
+You don't need to do anything to enable this — `.htaccess` ships with
+the zip and Apache (which Hostinger uses) reads it automatically.
+
+**Replit dev preview limitation:** the local PHP development server
+used inside Replit does **not** read `.htaccess` files. While
+previewing the site in Replit, the old `*.php` and `*.html` URLs
+still work, but the clean URLs (e.g. `/courses`, `/admin/programs`)
+will return 404. This is expected and only affects the dev preview —
+on Hostinger, both URL forms work and clean URLs are the primary form.
+
+---
+
 ## Step 6 — Log in and start managing the site
 
 Log in at:

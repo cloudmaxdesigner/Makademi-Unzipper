@@ -140,10 +140,10 @@ $admin_page_title = 'First-time admin setup';
       <div class="admin-flash success">
         Account created for <strong><?= e($createdUser) ?></strong>. For best security, delete this file from the server: <code>admin/setup-account.php</code>
       </div>
-      <p><a href="login.php" class="btn-admin primary">Go to login</a></p>
+      <p><a href="login" class="btn-admin primary">Go to login</a></p>
 <?php elseif ($err): ?>
       <div class="admin-flash error"><?= e($err) ?></div>
-      <p><a href="login.php" class="btn-admin outline">Go to login</a></p>
+      <p><a href="login" class="btn-admin outline">Go to login</a></p>
 <?php else: ?>
       <form method="post" class="admin-form" autocomplete="off">
         <?= csrf_field() ?>

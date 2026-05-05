@@ -1,0 +1,50 @@
+# Makademi — clean (extensionless) URLs
+#
+# Effects:
+#   /about           → serves about.html
+#   /courses         → serves courses.php   (the file beats the courses/ dir)
+#   /courses/foo     → serves courses/foo.html
+#   /admin/programs  → serves admin/programs.php
+#   /about.html      → 301 → /about
+#   /courses.php     → 301 → /courses        (query string preserved)
+#
+# NOTE: This file is read by Apache (Hostinger). Replit's PHP built-in
+# dev server does NOT read .htaccess, so on Replit the old `.php` /
+# `.html` URLs keep working unchanged. See ADMIN_SETUP.md.
+
+Options -MultiViews
+DirectoryIndex index.php index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1) 301-redirect any direct request for *.php to its clean URL.
+  #    THE_REQUEST is the raw HTTP request line, so this only fires for
+  #    real browser requests — never for our own internal rewrites below.
+  RewriteCond %{THE_REQUEST} \s/+([^?\s]+?)\.php([?\s]) [NC]
+  RewriteRule ^ /%1 [R=301,L,NE]
+
+  # 2) Same for *.html.
+  RewriteCond %{THE_REQUEST} \s/+([^?\s]+?)\.html([?\s]) [NC]
+  RewriteRule ^ /%1 [R=301,L,NE]
+
+  # 3) Special case: /courses (and /courses/) must serve courses.php,
+  #    not the courses/ directory listing. Without this, Apache's
+  #    DirectorySlash would redirect /courses → /courses/ and try to
+  #    serve a directory index that doesn't exist.
+  RewriteRule ^courses/?$ courses.php [L]
+
+  # 4) Internally rewrite an extensionless URL to .php if that file exists.
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+  RewriteRule ^(.+?)/?$ $1.php [L]
+
+  # 5) Otherwise rewrite to .html if that file exists.
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.+?)/?$ $1.html [L]
+</IfModule>
+
+ErrorDocument 404 /404.html

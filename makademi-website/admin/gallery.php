@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-        redirect('gallery.php');
+        redirect('gallery');
     }
 
     if ($do === 'delete_category') {
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdo->prepare('DELETE FROM gallery_categories WHERE id = ?')->execute([$id]);
             flash_set('success', 'Gallery category removed.');
         }
-        redirect('gallery.php');
+        redirect('gallery');
     }
 
     if ($do === 'upload_photo') {
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $caption = trim((string)($_POST['caption'] ?? ''));
         if ($catId <= 0) {
             flash_set('error', 'Pick a category first.');
-            redirect('gallery.php');
+            redirect('gallery');
         }
         if (empty($_FILES['photo']) || $_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
             $code = $_FILES['photo']['error'] ?? -1;
@@ -104,20 +104,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 default                                    => 'Upload failed (code ' . (int)$code . ').',
             };
             flash_set('error', $msg);
-            redirect('gallery.php');
+            redirect('gallery');
         }
         $tmp  = $_FILES['photo']['tmp_name'];
         $size = (int)$_FILES['photo']['size'];
         if ($size > MAX_UPLOAD_BYTES) {
             flash_set('error', 'Image must be 10 MB or smaller.');
-            redirect('gallery.php');
+            redirect('gallery');
         }
         // Inspect the actual bytes — never trust the client's content-type.
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $mime  = $finfo->file($tmp) ?: '';
         if (!isset(ALLOWED_IMAGE_MIMES[$mime])) {
             flash_set('error', 'Only JPG, PNG, WebP, or GIF images are accepted.');
-            redirect('gallery.php');
+            redirect('gallery');
         }
         $ext  = ALLOWED_IMAGE_MIMES[$mime];
         // Random unique filename — never use the user-provided name.
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dest = $dir . '/' . $name;
         if (!@move_uploaded_file($tmp, $dest)) {
             flash_set('error', 'Could not save the uploaded file.');
-            redirect('gallery.php');
+            redirect('gallery');
         }
         @chmod($dest, 0644);
 
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ins = $pdo->prepare('INSERT INTO gallery_images (gallery_category_id, filename, caption, sort_order) VALUES (?,?,?,?)');
         $ins->execute([$catId, $name, $caption, $sortOrder]);
         flash_set('success', 'Photo uploaded.');
-        redirect('gallery.php');
+        redirect('gallery');
     }
 
     if ($do === 'delete_photo') {
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 flash_set('success', 'Photo removed.');
             }
         }
-        redirect('gallery.php');
+        redirect('gallery');
     }
 
     if ($do === 'reorder') {
@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
         flash_set($ok ? 'success' : 'error', $ok ? 'Order updated.' : 'Could not save the new order.');
-        redirect('gallery.php');
+        redirect('gallery');
     }
 
     if ($do === 'update_caption') {
@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $pdo->prepare('UPDATE gallery_images SET caption = ? WHERE id = ?')->execute([$caption, $id]);
             flash_set('success', 'Caption updated.');
         }
-        redirect('gallery.php');
+        redirect('gallery');
     }
 }
 
@@ -286,7 +286,7 @@ require __DIR__ . '/_header.php';
 <?php if (!$images): ?>
   <p style="color:var(--admin-muted)">No photos yet — upload one below.</p>
 <?php else: ?>
-  <div class="gallery-grid reorder-horizontal" data-reorder data-reorder-url="gallery.php" data-reorder-item=".gallery-thumb[data-id]" data-reorder-scope="cat:<?= (int)$cat['id'] ?>">
+  <div class="gallery-grid reorder-horizontal" data-reorder data-reorder-url="gallery" data-reorder-item=".gallery-thumb[data-id]" data-reorder-scope="cat:<?= (int)$cat['id'] ?>">
 <?php foreach ($images as $img): $src = '../' . $urlPrefix . '/' . rawurlencode($img['filename']); ?>
     <div class="gallery-thumb" data-id="<?= (int)$img['id'] ?>">
       <span class="drag-handle gallery-handle" role="button" aria-label="Drag to reorder" title="Drag to reorder">

@@ -28,11 +28,11 @@ $counts = [
 <div class="admin-card">
   <h2 style="margin-top:0">Quick actions</h2>
   <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-    <a class="btn-admin primary" href="programs.php?action=new">Add a new program</a>
-    <a class="btn-admin outline" href="programs.php">Manage programs</a>
-    <a class="btn-admin gold" href="gallery.php">Upload gallery photos</a>
-    <a class="btn-admin outline" href="../courses.php" target="_blank" rel="noopener">View public Programs page</a>
-    <a class="btn-admin outline" href="../gallery.php" target="_blank" rel="noopener">View public Gallery page</a>
+    <a class="btn-admin primary" href="programs?action=new">Add a new program</a>
+    <a class="btn-admin outline" href="programs">Manage programs</a>
+    <a class="btn-admin gold" href="gallery">Upload gallery photos</a>
+    <a class="btn-admin outline" href="../courses" target="_blank" rel="noopener">View public Programs page</a>
+    <a class="btn-admin outline" href="../gallery" target="_blank" rel="noopener">View public Gallery page</a>
   </div>
 </div>
 

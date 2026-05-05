@@ -22,22 +22,22 @@
         <div class="footer-col">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="courses.php">Programs</a></li>
-            <li><a href="gallery.php">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="about">About</a></li>
+            <li><a href="courses">Programs</a></li>
+            <li><a href="gallery">Gallery</a></li>
+            <li><a href="contact">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Program Categories</h4>
           <ul>
-            <li><a href="courses.php?category=engineering-technical">Engineering &amp; Technical</a></li>
-            <li><a href="courses.php?category=health-safety-environment">Health, Safety &amp; Environment</a></li>
-            <li><a href="courses.php?category=fire-safety-emergency">Fire Safety &amp; Emergency</a></li>
-            <li><a href="courses.php?category=telecom-digital">Telecom &amp; Digital</a></li>
-            <li><a href="courses.php?category=management-leadership">Management &amp; Leadership</a></li>
-            <li><a href="courses.php?category=maintenance-production">Maintenance &amp; Production</a></li>
+            <li><a href="courses?category=engineering-technical">Engineering &amp; Technical</a></li>
+            <li><a href="courses?category=health-safety-environment">Health, Safety &amp; Environment</a></li>
+            <li><a href="courses?category=fire-safety-emergency">Fire Safety &amp; Emergency</a></li>
+            <li><a href="courses?category=telecom-digital">Telecom &amp; Digital</a></li>
+            <li><a href="courses?category=management-leadership">Management &amp; Leadership</a></li>
+            <li><a href="courses?category=maintenance-production">Maintenance &amp; Production</a></li>
           </ul>
         </div>
         <div class="footer-col">

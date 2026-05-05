@@ -89,5 +89,5 @@ function gallery_for_public(): array
 /** Inquiry-link helper — keeps the existing query-string convention. */
 function inquiry_url(string $title): string
 {
-    return 'contact.php?subject=' . rawurlencode('Inquiry: ' . $title);
+    return 'contact?subject=' . rawurlencode('Inquiry: ' . $title);
 }
