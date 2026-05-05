@@ -15,7 +15,7 @@ paths = [ "/" ]
 localPort = 22731
 
 [services.development]
-run = "php -S 0.0.0.0:22731 -t /home/runner/workspace/makademi-website"
+run = "php -S 0.0.0.0:22731 -t /home/runner/workspace/makademi-website /home/runner/workspace/makademi-website/router.php"
 
 [services.production]
 publicDir = "makademi-website"
