@@ -282,9 +282,29 @@ require __DIR__ . '/_header.php';
     </form>
   </div>
 
-  <h3 style="margin:1.25rem 0 0.5rem;font-size:0.9375rem;color:var(--admin-muted);text-transform:uppercase;letter-spacing:0.5px">Photos (<?= count($images) ?>)</h3>
+  <h3 style="margin:1.25rem 0 0.5rem;font-size:0.8125rem;color:var(--admin-muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Upload a new photo</h3>
+  <form method="post" enctype="multipart/form-data" class="admin-form gallery-upload">
+    <?= csrf_field() ?>
+    <input type="hidden" name="do" value="upload_photo">
+    <input type="hidden" name="gallery_category_id" value="<?= (int)$cat['id'] ?>">
+    <div class="row">
+      <div>
+        <label>Photo (JPG / PNG / WebP / GIF, max 10 MB)</label>
+        <input type="file" name="photo" accept="image/jpeg,image/png,image/webp,image/gif" required>
+      </div>
+      <div>
+        <label>Caption</label>
+        <input type="text" name="caption" maxlength="255" placeholder="e.g. Live-fire drill at PETKİM Center, İzmir">
+      </div>
+    </div>
+    <div class="actions">
+      <button type="submit" class="btn-admin primary">Upload photo</button>
+    </div>
+  </form>
+
+  <h3 style="margin:1.5rem 0 0.5rem;font-size:0.9375rem;color:var(--admin-muted);text-transform:uppercase;letter-spacing:0.5px">Photos (<?= count($images) ?>)</h3>
 <?php if (!$images): ?>
-  <p style="color:var(--admin-muted)">No photos yet — upload one below.</p>
+  <p style="color:var(--admin-muted)">No photos yet — upload one above to get started.</p>
 <?php else: ?>
   <div class="gallery-grid reorder-horizontal" data-reorder data-reorder-url="gallery" data-reorder-item=".gallery-thumb[data-id]" data-reorder-scope="cat:<?= (int)$cat['id'] ?>">
 <?php foreach ($images as $img): $src = '../' . $urlPrefix . '/' . rawurlencode($img['filename']); ?>
@@ -319,26 +339,6 @@ require __DIR__ . '/_header.php';
 <?php endforeach; ?>
   </div>
 <?php endif; ?>
-
-  <h3 style="margin:1.5rem 0 0.5rem;font-size:0.8125rem;color:var(--admin-muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Upload a new photo</h3>
-  <form method="post" enctype="multipart/form-data" class="admin-form gallery-upload">
-    <?= csrf_field() ?>
-    <input type="hidden" name="do" value="upload_photo">
-    <input type="hidden" name="gallery_category_id" value="<?= (int)$cat['id'] ?>">
-    <div class="row">
-      <div>
-        <label>Photo (JPG / PNG / WebP / GIF, max 10 MB)</label>
-        <input type="file" name="photo" accept="image/jpeg,image/png,image/webp,image/gif" required>
-      </div>
-      <div>
-        <label>Caption</label>
-        <input type="text" name="caption" maxlength="255" placeholder="e.g. Live-fire drill at PETKİM Center, İzmir">
-      </div>
-    </div>
-    <div class="actions">
-      <button type="submit" class="btn-admin primary">Upload photo</button>
-    </div>
-  </form>
 </div>
 <?php endforeach; endif; ?>
 
