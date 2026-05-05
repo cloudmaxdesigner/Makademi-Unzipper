@@ -323,9 +323,9 @@ h1, h2, h3 { font-family: 'DM Sans', 'Inter', sans-serif; letter-spacing: -0.01e
 
 /* ---------- Login / Setup ---------- */
 .login-shell {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; display: flex; align-items: flex-start; justify-content: center;
   background: radial-gradient(circle at 30% 0%, #003878 0%, #00234B 45%, #001428 100%);
-  padding: 1.5rem; color: var(--admin-text);
+  padding: 0.5rem 1.5rem 1.5rem; color: var(--admin-text);
 }
 .login-card {
   background: #fff; padding: 2.25rem 2rem; border-radius: 14px;
@@ -429,6 +429,7 @@ h1, h2, h3 { font-family: 'DM Sans', 'Inter', sans-serif; letter-spacing: -0.01e
   .admin-stats { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .admin-table th, .admin-table td { padding: 0.55rem 0.5rem; font-size: 0.8125rem; }
+  .login-shell { padding-top: 0.25rem; }
   .login-card { padding: 1.25rem 1rem; }
   .topbar-title { max-width: 140px; }
 }
